@@ -770,6 +770,78 @@
             transform: scale(1.08)
         }
 
+        .g-item.image-only .g-img {
+            aspect-ratio: auto;
+            height: auto
+        }
+
+        .g-item.image-only .g-img img {
+            display: block;
+            height: auto;
+            object-fit: contain
+        }
+
+        .image-gallery-group {
+            position: relative;
+            grid-column: 1 / -1;
+            min-width: 0
+        }
+
+        .image-gallery-track {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px 2px 12px;
+            scroll-behavior: smooth;
+            scroll-snap-type: x proximity;
+            scrollbar-width: thin;
+            scrollbar-color: var(--p300) transparent
+        }
+
+        .image-gallery-track .g-item {
+            flex: 0 0 clamp(130px, 17vw, 190px);
+            scroll-snap-align: start
+        }
+
+        .image-gallery-track .g-item.image-only .g-img {
+            max-height: 190px
+        }
+
+        .image-gallery-track .g-item.image-only .g-img img {
+            max-height: 190px;
+            width: 100%
+        }
+
+        .slider-control {
+            position: absolute;
+            top: 50%;
+            z-index: 2;
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .94);
+            color: var(--p600);
+            box-shadow: 0 5px 16px rgba(43, 36, 40, .18);
+            cursor: pointer;
+            transform: translateY(-50%);
+            transition: background .2s, color .2s, transform .2s
+        }
+
+        .slider-control:hover {
+            background: var(--p500);
+            color: #fff;
+            transform: translateY(-50%) scale(1.06)
+        }
+
+        .slider-control.prev {
+            left: 8px
+        }
+
+        .slider-control.next {
+            right: 8px
+        }
+
         .g-img::after {
             content: 'Preview';
             position: absolute;
@@ -804,6 +876,22 @@
             text-transform: uppercase;
             letter-spacing: .1em;
             color: var(--p500)
+        }
+
+        .visit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 12px;
+            color: var(--p600);
+            font: 700 11px 'Montserrat';
+            letter-spacing: .08em;
+            text-transform: uppercase
+        }
+
+        .visit-link:hover {
+            color: var(--p500);
+            text-decoration: underline
         }
 
         /* ===== CASE STUDIES ===== */
@@ -1412,10 +1500,11 @@
         }
 
         .lb-card {
-            width: min(600px, 100%);
+            position: relative;
+            width: min(92vw, 1200px);
             max-height: calc(100dvh - 32px);
-            overflow: auto;
-            background: #fff;
+            overflow: hidden;
+            background: #1d171a;
             border-radius: 24px;
             border: 1px solid var(--p200);
             box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45);
@@ -1423,15 +1512,52 @@
         }
 
         .lb-card img {
-            width: 100%;
-            aspect-ratio: 16/10;
-            object-fit: cover
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 92vw;
+            max-height: calc(100dvh - 32px);
+            object-fit: contain;
+            margin: auto
         }
 
         .lb-body {
             padding: 22px;
             display: grid;
-            gap: 6px
+            gap: 6px;
+            background: #fff
+        }
+
+        .lb-card.image-preview .lb-body {
+            display: none
+        }
+
+        .lb-nav {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none
+        }
+
+        .lb-nav button {
+            pointer-events: auto;
+            width: 42px;
+            height: 42px;
+            margin: 0 12px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .92);
+            color: var(--p600);
+            cursor: pointer;
+            box-shadow: 0 5px 16px rgba(0, 0, 0, .25);
+            transition: background .2s, color .2s
+        }
+
+        .lb-nav button:hover {
+            background: var(--p500);
+            color: #fff
         }
 
         .lb-body h3 {
@@ -1706,6 +1832,7 @@
                 </div>
                 <div class="gallery reveal">
                     <div class="g-item" tabindex="0" data-category="web"
+                        data-url=""
                         data-desc="An academic project delivering a complete online storefront for a handmade crafts business. It transforms basic shopping mechanics into a seamless user experience, bridging the gap between web systems coursework and real-world client needs.">
                         <div class="g-img"><img loading="lazy" src="assets/agape_coverphoto.png"
                                 alt="Blush Commerce UI System"
@@ -1716,6 +1843,7 @@
                         </div>
                     </div>
                     <div class="g-item" tabindex="0" data-category="web"
+                        data-url=""
                         data-desc="CERTIGO is a web-based application that digitizes the request and approval process for Barangay Indigency Certificates in Barangay Balangkas, providing an online tracking portal for citizens and an organized management dashboard for barangay personnel to improve efficiency and reduce paperwork.">
                         <div class="g-img"><img loading="lazy" src="assets/certigo_coverphoto.png"
                                 alt="Blush Commerce UI System"
@@ -1725,12 +1853,65 @@
                             <h3>Certigo-Balangkas Website</h3>
                         </div>
                     </div>
-                    <div class="g-item" tabindex="0" data-category="web" data-desc="Revamped Website of BSOP">
+                    <div class="g-item" tabindex="0" data-category="web" data-url="" data-desc="Revamped Website of BSOP">
                         <div class="g-img"><img loading="lazy" src="#" alt="Blush Commerce UI System"
                                 onerror="this.src='https://placehold.co/600x450/FADADD/2B2428?text=BSOP+Website'">
                         </div>
                         <div class="g-cap"><span>Web UI Design</span>
                             <h3>BSOP Website</h3>
+                        </div>
+                    </div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic">
+                        <div class="g-img"><img loading="lazy" src="assets/banner-img.jpg"
+                                alt="Graphic design showcase">
+                        </div>
+                    </div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/donutworry.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/eliccm-pubmat.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/ethics-1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/ethics-2.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/ethics-3.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/hbd-cher-1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/hbd-cher-2.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/hbd-edgar.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/helltouch.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/menu-arvie-poster-3.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/menu-arvie-tarp-1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/menu-arvie-tarp-2.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/nonoy-profile.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/paagi-1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/paagi-2.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/paagi-3.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/paagi-4.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/paagi-5.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/paagi-6.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/paagi-7.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/poster1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/productdesign1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/raketph-1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/raketph-2.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/raketph-6.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/Rizal Timeline of Events.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/rvalesson5.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/SPCC.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/ss.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/sts-photojourn.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/val-chess-logo.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/women.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/7 Days Of Creation.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/anniv-poster-1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/anniv-poster-2.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/BACK.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/blazing.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/blazing-1.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/campers-elijah.jpg" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/certigo_coverphoto.png" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/deargleamy-1.png" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/deargleamy-2.png" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="graphic"><div class="g-img"><img loading="lazy" src="assets/images/projects/deargleamy-3.png" alt="Graphic design project"></div></div>
+                    <div class="g-item image-only" tabindex="0" data-category="agile">
+                        <div class="g-img"><img loading="lazy" src="assets/profile-img.png"
+                                alt="Photography showcase">
                         </div>
                     </div>
 
@@ -1969,6 +2150,10 @@
             <div class="lb-wrap">
                 <img id="lb-img" src="" alt="Preview">
                 <button class="lb-x" aria-label="Close preview"><i class="fa-solid fa-xmark"></i></button>
+                <div class="lb-nav" aria-label="Image navigation">
+                    <button id="lb-prev" type="button" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button id="lb-next" type="button" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
             </div>
             <div class="lb-body"><span class="eyebrow" id="lb-tag"></span>
                 <h3 id="lb-title"></h3>
@@ -2002,25 +2187,111 @@
 
         // 4. Gallery filter
         const items = $$('.g-item');
+        const imageGroups = {};
+        ['graphic', 'agile'].forEach(category => {
+            const groupItems = items.filter(i => i.dataset.category === category);
+            const group = document.createElement('div');
+            group.className = 'image-gallery-group';
+            group.dataset.category = category;
+            const track = document.createElement('div');
+            track.className = 'image-gallery-track';
+            const prev = document.createElement('button');
+            prev.className = 'slider-control prev';
+            prev.type = 'button';
+            prev.setAttribute('aria-label', `Previous ${category} image`);
+            prev.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+            const next = document.createElement('button');
+            next.className = 'slider-control next';
+            next.type = 'button';
+            next.setAttribute('aria-label', `Next ${category} image`);
+            next.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+            groupItems.forEach(i => track.append(i));
+            group.append(track, prev, next);
+            $('.gallery').append(group);
+            imageGroups[category] = { group, track, items: groupItems };
+            const distance = () => Math.max(track.clientWidth * .8, 220);
+            prev.addEventListener('click', () => track.scrollBy({ left: -distance(), behavior: 'smooth' }));
+            next.addEventListener('click', () => track.scrollBy({ left: distance(), behavior: 'smooth' }));
+        });
+        const imageItems = items.filter(i => i.classList.contains('image-only'));
         $$('.filter').forEach(b => b.addEventListener('click', () => {
             $$('.filter').forEach(x => x.classList.toggle('active', x === b));
             const f = b.dataset.filter;
-            items.forEach(i => { const show = f === 'all' || i.dataset.category === f; i.hidden = !show; if (show) { i.style.animation = 'none'; i.offsetHeight; i.style.animation = '' } });
+            items.filter(i => !i.classList.contains('image-only')).forEach(i => {
+                const show = f === 'all' || i.dataset.category === f;
+                i.hidden = !show;
+                if (show) { i.style.animation = 'none'; i.offsetHeight; i.style.animation = '' }
+            });
+            Object.entries(imageGroups).forEach(([category, data]) => {
+                data.group.hidden = f !== 'all' && f !== category;
+                data.items.forEach(i => {
+                    i.hidden = false;
+                    i.style.animation = 'none';
+                    i.offsetHeight;
+                    i.style.animation = '';
+                });
+            });
         }));
 
-        // 5. Lightbox (reads title, tag, image and description from each card)
+        // 5. Gallery links and lightbox
         const lb = $('#lb');
+        items.forEach(i => {
+            const url = (i.dataset.url || '').trim();
+            if (i.dataset.category === 'web' && url) {
+                const link = document.createElement('a');
+                link.className = 'visit-link';
+                link.href = url;
+                link.target = '_blank';
+                link.rel = 'noopener';
+                link.innerHTML = 'Visit Website <i class="fa-solid fa-arrow-up-right-from-square"></i>';
+                const caption = $('.g-cap', i);
+                if (caption) caption.append(link);
+            }
+        });
+        let currentImageIndex = 0;
+        function imageCollection(i) {
+            return imageItems.filter(item => item.dataset.category === i.dataset.category);
+        }
         function openLb(i) {
+            const isImageOnly = i.classList.contains('image-only');
+            const collection = isImageOnly ? imageCollection(i) : [i];
+            currentImageIndex = Math.max(0, collection.indexOf(i));
+            lb._collection = collection;
+            lb.classList.toggle('image-preview', isImageOnly);
             $('#lb-img').src = $('img', i).src.replace('w=700', 'w=900'); $('#lb-img').alt = $('img', i).alt;
-            $('#lb-tag').textContent = $('.g-cap span', i).textContent;
-            $('#lb-title').textContent = $('.g-cap h3', i).textContent;
-            $('#lb-desc').textContent = i.dataset.desc;
+            const caption = $('.g-cap', i);
+            const hasCaption = Boolean(caption);
+            $('#lb-tag').textContent = hasCaption ? $('.g-cap span', i).textContent : '';
+            $('#lb-title').textContent = hasCaption ? $('.g-cap h3', i).textContent : '';
+            $('#lb-desc').textContent = i.dataset.desc || '';
+            $('#lb-tag').hidden = !hasCaption;
+            $('#lb-title').hidden = !hasCaption;
+            $('#lb-desc').hidden = !i.dataset.desc;
+            $('#lb-prev').hidden = !isImageOnly;
+            $('#lb-next').hidden = !isImageOnly;
             lb.classList.add('open'); document.body.style.overflow = 'hidden';
         }
+        function showImage(offset) {
+            const collection = lb._collection || [];
+            if (!collection.length) return;
+            currentImageIndex = (currentImageIndex + offset + collection.length) % collection.length;
+            openLb(collection[currentImageIndex]);
+        }
         function closeLb() { lb.classList.remove('open'); document.body.style.overflow = '' }
-        items.forEach(i => { i.addEventListener('click', () => openLb(i)); i.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(i) } }) });
-        lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.lb-x')) closeLb() });
-        addEventListener('keydown', e => { if (e.key === 'Escape') closeLb() });
+        items.forEach(i => {
+            i.addEventListener('click', e => { if (!e.target.closest('.visit-link')) openLb(i) });
+            i.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('.visit-link')) { e.preventDefault(); openLb(i) } });
+        });
+        $('#lb-prev').addEventListener('click', () => showImage(-1));
+        $('#lb-next').addEventListener('click', () => showImage(1));
+        lb.addEventListener('click', e => {
+            if (e.target === lb || e.target === $('.lb-wrap', lb) || e.target.closest('.lb-x')) closeLb();
+        });
+        addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeLb();
+            if (lb.classList.contains('open') && e.key === 'ArrowLeft') showImage(-1);
+            if (lb.classList.contains('open') && e.key === 'ArrowRight') showImage(1);
+        });
 
         // 6. FAQ accordion
         $$('.faq-q').forEach(b => b.addEventListener('click', () => {
